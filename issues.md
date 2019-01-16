@@ -17,4 +17,14 @@ if self.training:
 ```
 
 
-2. when the loss is nan, it is probabley that the coordinate is smaller than 0, you should add a comment at the line 234 in lib/datasets/pascal_voc.py
+2. when the loss is nan, it is probabley that the coordinate is smaller than 0, you should add a comment at the line 234 in lib/datasets/pascal_voc.py, like this:
+
+```
+for ix, obj in enumerate(objs):
+  bbox = obj.find('bndbox')
+  # Make pixel indexes 0-based
+  x1 = float(bbox.find('xmin').text) #- 1
+  y1 = float(bbox.find('ymin').text) #- 1
+  x2 = float(bbox.find('xmax').text) - 1
+  y2 = float(bbox.find('ymax').text) - 1
+```
